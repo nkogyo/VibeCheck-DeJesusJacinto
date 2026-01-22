@@ -1,27 +1,255 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>VibeCheck 411L</title>
+  <style>
+    :root{
+      --bg: #0b1220;
+      --card: rgba(255,255,255,0.07);
+      --card2: rgba(255,255,255,0.10);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.70);
+      --border: rgba(255,255,255,0.12);
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(900px 500px at 10% 10%, rgba(99,102,241,0.35), transparent 60%),
+        radial-gradient(900px 500px at 90% 20%, rgba(34,211,238,0.25), transparent 60%),
+        radial-gradient(900px 600px at 40% 100%, rgba(16,185,129,0.18), transparent 60%),
+        var(--bg);
+      padding: 28px 18px;
+    }
+
+    .container{
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 16px;
+      padding: 18px 18px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .title{
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+    }
+    h1{
+      margin:0;
+      font-size: 26px;
+      letter-spacing: 0.2px;
+    }
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .status{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap: 6px;
+      min-width: 220px;
+      text-align:right;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+      font-size: 13px;
+      user-select:none;
+    }
+    .dot{
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #f87171; /* red by default */
+      box-shadow: 0 0 0 4px rgba(248,113,113,0.18);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+    }
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+      .status{ align-items:flex-start; text-align:left; }
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      padding: 16px;
+    }
+
+    .card h2{
+      margin: 0 0 10px;
+      font-size: 16px;
+      color: rgba(255,255,255,0.88);
+      letter-spacing: 0.2px;
+    }
+
+    .btnRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+    }
+
+    button{
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      cursor:pointer;
+      transition: transform 120ms ease, background 120ms ease, border 120ms ease;
+      user-select:none;
+    }
+    button:hover{
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-1px);
+    }
+    button:active{
+      transform: translateY(0px) scale(0.99);
+    }
+    button:disabled{
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform:none;
+    }
+
+    .primary{
+      background: rgba(99,102,241,0.28);
+      border-color: rgba(99,102,241,0.5);
+    }
+    .primary:hover{ background: rgba(99,102,241,0.35); }
+
+    .danger{
+      background: rgba(248,113,113,0.22);
+      border-color: rgba(248,113,113,0.45);
+    }
+    .danger:hover{ background: rgba(248,113,113,0.28); }
+
+    .small{
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      color: var(--muted);
+    }
+
+    pre{
+      margin: 0;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.25);
+      overflow:auto;
+      min-height: 220px;
+      line-height: 1.4;
+      font-size: 13px;
+      color: rgba(255,255,255,0.90);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .hint{
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer{
+      color: rgba(255,255,255,0.55);
+      font-size: 12px;
+      text-align:center;
+      padding: 6px 0 0;
+    }
+    a { color: rgba(34,211,238,0.9); }
+  </style>
 </head>
+
 <body>
-  <h1>VibeCheck 411L</h1>
-  <p>Click buttons. This page will fetch data from your Node.js API.</p>
+  <div class="container">
+    <header>
+      <div class="title">
+        <h1>VibeCheck 411L</h1>
+        <p class="subtitle">
+          Activity 3 - De Jesus, Jacinto
+        </p>
+      </div>
 
-  <div>
-    <button id="btnFortune">🔮 Fortune</button>
-    <button id="btnJoke">😂 Joke</button>
-    <button data-mood="happy" class="btnMood">😄 Happy</button>
-    <button data-mood="tired" class="btnMood">🥱 Tired</button>
-    <button data-mood="stressed" class="btnMood">😵‍💫 Stressed</button>
-    <button id="btnSmash">💥 SMASH!</button>
-    <button id="btnSecret">🕵️ Secret</button>
+      <div class="status">
+        <div class="pill" title="Backend connection status">
+          <span class="dot" id="dot"></span>
+          <span id="statusText">Backend: checking…</span>
+        </div>
+        <div class="pill small" id="baseText">API: http://localhost:3000</div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Buttons</h2>
+        <div class="btnRow">
+          <button id="btnFortune" class="primary">🔮 Fortune</button>
+          <button id="btnJoke">😂 Joke</button>
+          <button data-mood="happy" class="btnMood">😄 Happy</button>
+          <button data-mood="tired" class="btnMood">🥱 Tired</button>
+          <button data-mood="stressed" class="btnMood">😵‍💫 Stressed</button>
+          <button id="btnSmash" class="danger">💥 SMASH!</button>
+          <button id="btnSecret">🕵️ Secret</button>
+          <button id="btnClear" class="small">Clear Output</button>
+        </div>
+
+        <p class="hint">
+          Tip: keep your backend running: <code>cd backend</code> → <code>node index.js</code>
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Output</h2>
+        <pre id="out">Ready…</pre>
+      </section>
+    </div>
+
+    <div class="footer">
+      CPE 411L • VibeCheck API + Button Smash UI
+    </div>
+
+    <script src="app.js"></script>
   </div>
-
-  <h2>Output</h2>
-  <pre id="out">Ready...</pre>
-
-  <script src="app.js"></script>
 </body>
 </html>
